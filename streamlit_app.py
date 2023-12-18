@@ -71,7 +71,7 @@ def chat_with_openai(prompt):
         return None
 
 # Set OpenAI API key
-openai.api_key = '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'  # Replace with your actual API key
+openai.api_key = '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'  # Replace with your actual API key
 
 # Streamlit Interface
 st.header("Oraku Santos' Classroom Assistant")
