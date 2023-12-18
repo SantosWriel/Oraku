@@ -1,6 +1,10 @@
 import openai
 import streamlit as st
 
+
+# Retrieve the API key from Streamlit's secrets
+openai.api_key = st.secrets["openai_api_key"]
+
 # Define the function for language simplification (placeholder)
 def simplify_language_for_ells(text):
     """
@@ -69,9 +73,6 @@ def chat_with_openai(prompt):
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
-
-# Set OpenAI API key
-openai.api_key = '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'  # Replace with your actual API key
 
 # Streamlit Interface
 st.header("Oraku Santos' Classroom Assistant")
