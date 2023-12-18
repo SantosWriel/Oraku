@@ -3,13 +3,29 @@ import streamlit as st
 
 # Define the function for language simplification (placeholder)
 def simplify_language_for_ells(text):
-    # Placeholder logic for language simplification
-    return text
+    """
+    Simplifies the language of the given text for English Language Learners using OpenAI's API.
+    """
+    try:
+        # Constructing a prompt for language simplification
+        prompt = f"Simplify this text for English Language Learners:\n\n{text}"
+
+        response = openai.Completion.create(
+            engine="text-davinci-002",  # Or the latest available model
+            prompt=prompt,
+            max_tokens=100  # Adjust based on your requirements
+        )
+        simplified_text = response.choices[0].text.strip()
+
+        return simplified_text
+    except Exception as e:
+        print(f"An error occurred while simplifying language: {e}")
+        return text  # Return the original text if there's an error
 
 # Define the main chat function
 def chat_with_openai(prompt):
     # Detailed and enriched context for Oraku the Assistant
-    system_message = """
+    system_message = system_message = """
     You are Oraku the Assistant, an advanced AI chatbot specifically designed for High School English Language Arts. You specialize in assisting English Language Learners (ELLs). Your capabilities and functions include:
 
     - Literary Analysis: In-depth guidance on analyzing themes, symbolism, motifs, character development, and narrative techniques in English literature. Providing examples and insights on various literary works.
@@ -32,7 +48,7 @@ def chat_with_openai(prompt):
 
     Oraku the Assistant's approach is supportive, encouraging, and designed to create a positive and inclusive learning environment for all students.
     """
- try:
+    try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -40,34 +56,6 @@ def chat_with_openai(prompt):
                 {"role": "user", "content": prompt}
             ],
             max_tokens=150
-        )
-        content = response.choices[0].text.strip()
-     
-def simplify_language_for_ells(text):
-    """
-    Simplifies the language of the given text for English Language Learners using OpenAI's API.
-    """
-    try:
-        # Constructing a prompt for language simplification
-        prompt = f"Simplify this text for English Language Learners:\n\n{text}"
-
-        response = openai.Completion.create(
-            engine="text-davinci-002",  # Or the latest available model
-            prompt=prompt,
-            max_tokens=100  # Adjust based on your requirements
-        )
-        simplified_text = response.choices[0].text.strip()
-
-        return simplified_text
-    except Exception as e:
-        print(f"An error occurred while simplifying language: {e}")
-        return text  # Return the original text if there's an error
-
-    try:
-        response = openai.Completion.create(
-            engine="text-davinci-002",
-            prompt=system_message + prompt,
-            max_tokens=100  # Adjust based on your requirements
         )
         content = response.choices[0].text.strip()
 
@@ -83,7 +71,7 @@ def simplify_language_for_ells(text):
         return None
 
 # Set OpenAI API key
-openai.api_key = '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'
+openai.api_key = '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'  # Replace with your actual API key
 
 # Streamlit Interface
 st.header("Oraku Santos' Classroom Assistant")
