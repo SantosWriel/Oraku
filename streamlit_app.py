@@ -31,8 +31,8 @@ class OrakuSantosAssistant:
 
 # Streamlit interface
 def run_streamlit_app():
-    st.title("Oraku Santos Assistant - Encouraging Critical Thinking")
-    st.write("Ask Oraku a question, and it will guide you to think critically about the answer.")
+    st.title("Oraku The Assistant")
+    st.write("I was developed by Mr. Santos to assist you. So, please ask me any question, and I will help you and guide you in thinking critically about the answer.")
     user_input = st.text_input("Ask Oraku:")
     if user_input:
         assistant = OrakuSantosAssistant()
