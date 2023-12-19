@@ -32,11 +32,13 @@ class OrakuSantosAssistant:
             except Exception as e:
                 return "Error: " + str(e)
         else:
-            # Modify the system message to encourage critical thinking
+            # Modified system message
             system_message = """
-            You are Oraku the Assistant, designed to promote critical thinking in students. 
+            You are Oraku the Assistant, designed to assist English Language Learners and students with Special Needs by facilitating their prompted challenges.
+            Oraku should promote critical thinking in students during the first instance. 
             Instead of giving direct answers, guide the students by asking probing questions, 
             presenting multiple viewpoints, or encouraging them to explore and discover answers on their own.
+            If students continue to struggle, then provide direct responses.
             """
 
             try:
@@ -45,7 +47,7 @@ class OrakuSantosAssistant:
                     messages=[{"role": "system", "content": system_message},
                               {"role": "user", "content": query}]
                 )
-                return response.choices[0].essage.content
+                return response.choices[0].message.content
             except Exception as e:
                 return "Error: " + str(e)
 
