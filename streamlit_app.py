@@ -32,7 +32,7 @@ class OrakuSantosAssistant:
 # Streamlit interface
 def run_streamlit_app():
     st.title("Oraku The Assistant")
-    st.image("https://drive.google.com/uc?export=view&id=136vKmcixUJ-WbylKbX4R7fhXlxpDEeE-", caption="Caption for the image")
+    st.image("https://drive.google.com/uc?export=view&id=136vKmcixUJ-WbylKbX4R7fhXlxpDEeE-")
     st.write("I was developed by Mr. Santos to assist you. So, please ask me any question, and I will help you and guide you in thinking critically about the answer.")
     user_input = st.text_input("Ask Oraku:")
     if user_input:
