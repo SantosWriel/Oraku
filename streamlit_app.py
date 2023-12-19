@@ -46,17 +46,16 @@ def chat_with_openai(prompt):
             max_tokens=150
         )
 
-        # Debug: Print the full response for inspection
-        print("API Response:", response)
+        # Safely accessing the response data
+        if response.get('choices') and len(response['choices']) > 0:
+            first_choice = response['choices'][0]
+            content = first_choice.get('text', '').strip()
 
-        if 'choices' in response and response.choices:
-            first_choice = response.choices[0]
-            if hasattr(first_choice, 'text') and first_choice.text:
-                content = first_choice.text.strip()
-            else:
-                raise ValueError("Missing 'text' in the response")
+            if not content:
+                raise ValueError("No content in the 'text' field of the response")
+
         else:
-            raise ValueError("Invalid response format from OpenAI API")
+            raise ValueError("Invalid or empty response format from OpenAI API")
 
         if any(keyword in prompt.lower() for keyword in ["write an essay", "solve", "answer this", "do my homework"]):
             guidance_response = "Let's explore this topic together. What specific part are you struggling with?"
