@@ -1,5 +1,20 @@
 import openai
 import streamlit as st
+import traceback
+
+def simplify_language_for_ells(text):
+    # ... [existing code in the function] ...
+    except Exception as e:
+        error_details = traceback.format_exc()
+        st.error(f"An error occurred while simplifying language: {e}\nDetails: {error_details}")
+        return text
+
+def chat_with_openai(prompt):
+    # ... [existing code in the function] ...
+    except Exception as e:
+        error_details = traceback.format_exc()
+        st.error(f"An error occurred in the chat function: {e}\nDetails: {error_details}")
+        return None
 
 # Retrieve the API key from Streamlit's secrets
 openai.api_key = st.secrets["openai_api_key"]
