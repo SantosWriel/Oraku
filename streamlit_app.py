@@ -12,10 +12,12 @@ class OrakuSantosAssistant:
         # Check if the query is about asking for synonyms
         if query.lower().startswith("synonyms of"):
             try:
-                # Handle the synonyms query directly
+                # Modify the query to request low lexile level synonyms
+                modified_query = query + " with simple, easy-to-understand words"
+                
                 response = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo",
-                    messages=[{"role": "user", "content": query}]
+                    messages=[{"role": "user", "content": modified_query}]
                 )
                 return response.choices[0].message.content
             except Exception as e:
