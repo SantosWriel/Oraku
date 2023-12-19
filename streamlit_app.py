@@ -27,12 +27,6 @@ class OrakuSantosAssistant:
         except Exception as e:
             return "Error: " + str(e)
 
-    def get_api_response(self, query):
-        # Example of custom logic for critical thinking
-        if "define" in query or "what is" in query:
-            return "What do you think it means? Let's explore this together."
-        # ... rest of the method ...
-
     # ... existing methods ...
 
 # Streamlit interface
