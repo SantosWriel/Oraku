@@ -46,10 +46,11 @@ def chat_with_openai(prompt):
             max_tokens=150
         )
 
-        # Checking if 'choices' is in the response and if it has at least one element
+        # Debug: Print the full response for inspection
+        print("API Response:", response)
+
         if 'choices' in response and response.choices:
             first_choice = response.choices[0]
-            # Check if 'text' attribute is available in the first choice
             if hasattr(first_choice, 'text') and first_choice.text:
                 content = first_choice.text.strip()
             else:
