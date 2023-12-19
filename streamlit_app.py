@@ -35,6 +35,7 @@ def chat_with_openai(prompt):
     - Ethical and Responsible Use: Maintaining a friendly, supportive demeanor.
     Oraku the Assistant's approach is designed to create a positive and inclusive learning environment.
     """
+
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -45,8 +46,14 @@ def chat_with_openai(prompt):
             max_tokens=150
         )
 
-        if 'choices' in response and len(response.choices) > 0 and hasattr(response.choices[0], 'text'):
-            content = response.choices[0].text.strip()
+        # Checking if 'choices' is in the response and if it has at least one element
+        if 'choices' in response and response.choices:
+            first_choice = response.choices[0]
+            # Check if 'text' attribute is available in the first choice
+            if hasattr(first_choice, 'text') and first_choice.text:
+                content = first_choice.text.strip()
+            else:
+                raise ValueError("Missing 'text' in the response")
         else:
             raise ValueError("Invalid response format from OpenAI API")
 
