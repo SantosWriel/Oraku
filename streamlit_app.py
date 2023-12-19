@@ -1,3 +1,4 @@
+# Streamlit and OpenAI imports
 import openai
 import streamlit as st
 import traceback
@@ -5,72 +6,31 @@ import traceback
 # Retrieve the API key from Streamlit's secrets
 openai.api_key = st.secrets["openai_api_key"]
 
-# Define the function for language simplification (placeholder)
-def simplify_language_for_ells(text):
-    """
-    Simplifies the language for English Language Learners (ELLs).
+class OrakuSantosAssistant:
+    # ... existing initialization ...
 
-    Args:
-        text (str): The input text to be simplified.
+    def get_api_response(self, query):
+        # Use OpenAI API for generating responses
+        try:
+            response = openai.ChatCompletion.create(
+                model="your_model_here",  # Replace with your specific model
+                messages=[{"role": "system", "content": "Your system message here"},
+                          {"role": "user", "content": query}]
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            return "Error: " + str(e)
 
-    Returns:
-        str: The simplified text for ELLs.
-    """
-    # Function implementation goes here
-    # Placeholder implementation, replace with your own logic
-    return text
+    # ... existing methods ...
 
-# Define the main chat function
-def chat_with_openai(prompt):
-    system_message = """
-    You are Oraku the Assistant, an advanced AI chatbot specifically designed for High School English Language Arts. You specialize in assisting English Language Learners (ELLs). Your capabilities and functions include:
-    - Literary Analysis: In-depth guidance on analyzing themes, symbolism, motifs, character development, and narrative techniques in English literature.
-    - Writing Skills: Assisting in the development of writing skills, with a focus on grammar, sentence structure, essay composition, and creative writing.
-    - Vocabulary Development: Helping students expand their vocabulary.
-    - Critical Thinking and Analysis: Encouraging students to think critically about texts.
-    - Adherence to Common Core Standards: Aligning all guidance with high school Common Core Standards.
-    - Language Simplification: Tailoring responses to suit varying levels of English proficiency.
-    - Multimodal Learning Support: Incorporating visual and auditory aids to support diverse learning styles.
-    - Collaborative Learning: Encouraging group discussions and collaborative activities.
-    - Ethical and Responsible Use: Maintaining a friendly, supportive demeanor.
-    Oraku the Assistant's approach is designed to create a positive and inclusive learning environment.
-    """
-
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": system_message},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=150
-        )
-
-        # Safely accessing the response data
-        if response.get('choices') and len(response['choices']) > 0:
-            first_choice = response['choices'][0]
-            content = first_choice.get('text', '').strip()
-
-            if not content:
-                raise ValueError("No content in the 'text' field of the response")
-
-        else:
-            raise ValueError("Invalid or empty response format from OpenAI API")
-
-        if any(keyword in prompt.lower() for keyword in ["write an essay", "solve", "answer this", "do my homework"]):
-            guidance_response = "Let's explore this topic together. What specific part are you struggling with?"
-            return guidance_response
-        else:
-            return simplify_language_for_ells(content)
-    except Exception as e:
-        error_details = traceback.format_exc()
-        st.error(f"An error occurred in the chat function: {e}\nDetails: {error_details}")
-        return None
-
-# Streamlit Interface
-st.header("Oraku Santos' Classroom Assistant")
-user_input = st.text_input("Ask Oraku a question about English Language Arts")
-if user_input:
-    response = chat_with_openai(user_input)
-    if response:
+# Streamlit interface
+def run_streamlit_app():
+    st.title("Oraku Santos Assistant")
+    user_input = st.text_input("Ask Oraku:")
+    if user_input:
+        assistant = OrakuSantosAssistant()
+        response = assistant.get_api_response(user_input)
         st.write(response)
+
+if __name__ == "__main__":
+    run_streamlit_app()
