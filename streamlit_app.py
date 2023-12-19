@@ -1,4 +1,3 @@
-# Streamlit and OpenAI imports
 import openai
 import streamlit as st
 import traceback
@@ -10,22 +9,45 @@ class OrakuSantosAssistant:
     # ... existing initialization ...
 
     def get_api_response(self, query):
-        # Modify the system message to encourage critical thinking
-        system_message = """
-        You are Oraku the Assistant, designed to promote critical thinking in students. 
-        Instead of giving direct answers, guide the students by asking probing questions, 
-        presenting multiple viewpoints, or encouraging them to explore and discover answers on their own.
-        """
+        # Check if the query is about asking for synonyms
+        if query.lower().startswith("synonyms of"):
+            try:
+                # Handle the synonyms query directly
+                response = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=[{"role": "user", "content": query}]
+                )
+                return response.choices[0].message.content
+            except Exception as e:
+                return "Error: " + str(e)
+        # Check if the query is a translation request
+        elif "translate" in query.lower():
+            try:
+                # Handle the translation query directly
+                response = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=[{"role": "user", "content": query}]
+                )
+                return response.choices[0].message.content
+            except Exception as e:
+                return "Error: " + str(e)
+        else:
+            # Modify the system message to encourage critical thinking
+            system_message = """
+            You are Oraku the Assistant, designed to promote critical thinking in students. 
+            Instead of giving direct answers, guide the students by asking probing questions, 
+            presenting multiple viewpoints, or encouraging them to explore and discover answers on their own.
+            """
 
-        try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "system", "content": system_message},
-                          {"role": "user", "content": query}]
-            )
-            return response.choices[0].message.content
-        except Exception as e:
-            return "Error: " + str(e)
+            try:
+                response = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=[{"role": "system", "content": system_message},
+                              {"role": "user", "content": query}]
+                )
+                return response.choices[0].essage.content
+            except Exception as e:
+                return "Error: " + str(e)
 
     # ... existing methods ...
 
