@@ -5,27 +5,11 @@ import traceback
 # Retrieve the API key from Streamlit's secrets
 openai.api_key = st.secrets["openai_api_key"]
 
-# Define the function for language simplification
+# Define the function for language simplification (placeholder)
 def simplify_language_for_ells(text):
-    """
-    Simplifies the language of the given text for English Language Learners using OpenAI's API.
-    """
-    try:
-        # Constructing a prompt for language simplification
-        prompt = f"Simplify this text for English Language Learners:\n\n{text}"
-        response = openai.Completion.create(
-            engine="text-davinci-002",  # Or the latest available model
-            prompt=prompt,
-            max_tokens=100  # Adjust based on your requirements
-        )
-        simplified_text = response.choices[0].text.strip()
-        return simplified_text
-    except Exception as e:
-        error_details = traceback.format_exc()
-        st.error(f"An error occurred while simplifying language: {e}\nDetails: {error_details}")
-        return text  # Return the original text if there's an error
+    # ... [existing code of this function] ...
 
-# Define the main chat function
+# Replace your existing chat_with_openai function with the updated one
 def chat_with_openai(prompt):
     system_message = """
     You are Oraku the Assistant, an advanced AI chatbot specifically designed for High School English Language Arts. You specialize in assisting English Language Learners (ELLs). Your capabilities and functions include:
@@ -59,7 +43,12 @@ def chat_with_openai(prompt):
             ],
             max_tokens=150
         )
-        content = response.choices[0].text.strip()
+
+        # Updated error handling
+        if 'choices' in response and len(response.choices) > 0 and hasattr(response.choices[0], 'text'):
+            content = response.choices[0].text.strip()
+        else:
+            raise ValueError("Invalid response format from OpenAI API")
 
         if any(keyword in prompt.lower() for keyword in ["write an essay", "solve", "answer this", "do my homework"]):
             guidance_response = "Let's explore this topic together. What specific part are you struggling with?"
@@ -70,6 +59,17 @@ def chat_with_openai(prompt):
         error_details = traceback.format_exc()
         st.error(f"An error occurred in the chat function: {e}\nDetails: {error_details}")
         return None
+
+# Streamlit Interface
+st.header("Oraku Santos' Classroom Assistant")
+user_input = st.text_input("Ask Oraku a question about English Language Arts")
+if user_input:
+    response = chat_with_openai(user_input)
+    if response:
+        st.write(response)
+
+# ... [any additional code for your Streamlit app] ...
+
 
 # Streamlit Interface
 st.header("Oraku Santos' Classroom Assistant")
