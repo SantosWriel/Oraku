@@ -7,22 +7,22 @@ openai.api_key = st.secrets["openai_api_key"]
 
 # Define the function for language simplification (placeholder)
 def simplify_language_for_ells(text):
+    """
+    Simplifies the language for English Language Learners (ELLs).
+
+    Args:
+        text (str): The input text to be simplified.
+
+    Returns:
+        str: The simplified text for ELLs.
+    """
+    # Function implementation goes here
+    pass
     # ... [existing code of this function] ...
 
 def chat_with_openai(prompt):
-     system_message = """
-    You are Oraku the Assistant, an advanced AI chatbot specifically designed for High School English Language Arts. You specialize in assisting English Language Learners (ELLs). Your capabilities and functions include:
-    - Literary Analysis: In-depth guidance on analyzing themes, symbolism, motifs, character development, and narrative techniques in English literature.
-    - Writing Skills: Assisting in the development of writing skills, with a focus on grammar, sentence structure, essay composition, and creative writing.
-    - Vocabulary Development: Helping students expand their vocabulary.
-    - Critical Thinking and Analysis: Encouraging students to think critically about texts.
-    - Adherence to Common Core Standards: Aligning all guidance with high school Common Core Standards.
-    - Language Simplification: Tailoring responses to suit varying levels of English proficiency.
-    - Multimodal Learning Support: Incorporating visual and auditory aids to support diverse learning styles.
-    - Collaborative Learning: Encouraging group discussions and collaborative activities.
-    - Ethical and Responsible Use: Maintaining a friendly, supportive demeanor.
-    Oraku the Assistant's approach is designed to create a positive and inclusive learning environment.
-    """
+    # Add an indented block of code here
+    pass
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
